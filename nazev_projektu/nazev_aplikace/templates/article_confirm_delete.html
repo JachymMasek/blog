@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Smazat článek – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .delete-wrap {
+    max-width: 560px; margin: 0 auto;
+    padding: 7rem 3rem;
+    text-align: center;
+  }
+  .delete-icon {
+    font-size: 3rem; margin-bottom: 1.5rem; opacity: .4;
+  }
+  .delete-wrap h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem; letter-spacing: -.03em; margin-bottom: 1rem;
+  }
+  .delete-wrap p { color: var(--muted); line-height: 1.7; margin-bottom: .5rem; }
+  .article-title-preview {
+    display: inline-block; margin: 1.5rem 0 2.5rem;
+    padding: .8rem 1.5rem;
+    border: 1px solid rgba(15,14,12,.15);
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem; color: var(--ink);
+  }
+  .delete-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="delete-wrap fade-up">
+  <div class="delete-icon">⚠️</div>
+  <h1>Opravdu smazat?</h1>
+  <p>Tato akce je nevratná. Článek bude trvale odstraněn.</p>
+  <div class="article-title-preview">{{ article.title }}</div>
+
+  <div class="delete-actions">
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Ano, smazat</button>
+    </form>
+    <a href="{% url 'article_detail' article.slug %}" class="btn btn-outline">Zrušit</a>
+  </div>
+</div>
+{% endblock %}

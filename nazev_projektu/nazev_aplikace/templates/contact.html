@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}Kontakt – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    min-height: calc(90vh - 72px);
+  }
+  @media (max-width: 720px) { .contact-wrap { grid-template-columns: 1fr; } }
+
+  .contact-info {
+    padding: 5rem 3rem;
+    border-right: 1px solid rgba(15,14,12,.1);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .contact-info h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1.1; letter-spacing: -.03em;
+    margin-bottom: 1.5rem;
+  }
+  .contact-info h1 em { color: var(--accent); font-style: italic; }
+  .contact-info p { color: var(--muted); line-height: 1.75; max-width: 340px; }
+
+  .contact-details { margin-top: 3rem; }
+  .detail-item {
+    display: flex; flex-direction: column;
+    margin-bottom: 2rem;
+    border-top: 1px solid rgba(15,14,12,.12);
+    padding-top: 1rem;
+  }
+  .detail-label {
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: .3rem;
+  }
+  .detail-value { font-size: .95rem; font-weight: 500; color: var(--ink); }
+  .detail-value a { color: var(--ink); text-decoration: none; }
+  .detail-value a:hover { color: var(--accent); }
+
+  /* FORM */
+  .contact-form-area {
+    padding: 5rem 3rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .form-title {
+    font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 2.5rem;
+  }
+
+  .form-group { margin-bottom: 1.8rem; }
+  label {
+    display: block;
+    font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: .5rem;
+  }
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none; border-bottom: 1.5px solid rgba(15,14,12,.25);
+    padding: .6rem 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+    resize: none;
+  }
+  input:focus, textarea:focus { border-color: var(--ink); }
+  textarea { min-height: 110px; }
+
+  .submit-btn {
+    display: inline-block; margin-top: 1rem;
+    padding: .9rem 2.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem; font-weight: 500;
+    letter-spacing: .08em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: background .2s;
+  }
+  .submit-btn:hover { background: var(--accent); }
+
+  .success-msg {
+    display: none;
+    margin-top: 1.2rem;
+    font-size: .88rem; color: #2a7a4f;
+    font-weight: 500;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-wrap">
+
+  <!-- Left info panel -->
+  <div class="contact-info fade-up">
+    <div>
+      <h1>Napište<br>nám <em>dnes.</em></h1>
+      <p>Máte projekt, nápad nebo jen otázku? Rádi si popovídáme. Ozveme se do 24 hodin.</p>
+      <div class="contact-details">
+        <div class="detail-item">
+          <span class="detail-label">E-mail</span>
+          <span class="detail-value"><a href="mailto:ahoj@mysite.cz">ahoj@mysite.cz</a></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Telefon</span>
+          <span class="detail-value"><a href="tel:+420777000111">+420 777 000 111</a></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Sídlo</span>
+          <span class="detail-value">Praha, Česká republika</span>
+        </div>
+      </div>
+    </div>
+    <a href="{% url 'home' %}" style="font-size:.85rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;">← Zpět na Home</a>
+  </div>
+
+  <!-- Right form panel -->
+  <div class="contact-form-area fade-up-2">
+    <p class="form-title">Kontaktní formulář</p>
+    <form id="contactForm">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Jméno</label>
+        <input type="text" id="name" name="name" placeholder="Jan Novák" required />
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="jan@example.cz" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Zpráva</label>
+        <textarea id="message" name="message" placeholder="Popište, s čím potřebujete pomoci…" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Odeslat zprávu</button>
+      <p class="success-msg" id="successMsg">✓ Zpráva odeslána! Ozveme se brzy.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('successMsg').style.display = 'block';
+    this.reset();
+  });
+</script>
+{% endblock %}

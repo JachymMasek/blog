@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}{{ action }} – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .form-wrap {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    min-height: calc(90vh - 72px);
+  }
+  @media (max-width: 720px) { .form-wrap { grid-template-columns: 1fr; } }
+
+  .form-sidebar {
+    padding: 5rem 3rem;
+    border-right: 1px solid rgba(15,14,12,.1);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .form-sidebar h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.1; letter-spacing: -.03em; margin-bottom: .8rem;
+  }
+  .form-sidebar h1 em { color: var(--accent); font-style: italic; }
+  .form-sidebar p { font-size: .88rem; color: var(--muted); line-height: 1.7; }
+
+  .form-main {
+    padding: 5rem 3rem;
+  }
+  .form-label {
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); display: block; margin-bottom: .4rem; margin-top: 1.8rem;
+  }
+  .form-label:first-of-type { margin-top: 0; }
+
+  .form-error {
+    font-size: .78rem; color: var(--accent); margin-top: .3rem;
+  }
+  .form-row-2 {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
+  @media (max-width: 600px) { .form-row-2 { grid-template-columns: 1fr; gap: 0; } }
+
+  .slug-hint {
+    font-size: .72rem; color: var(--muted); margin-top: .3rem;
+  }
+
+  .form-actions {
+    display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; align-items: center;
+  }
+  .cancel-link {
+    font-size: .82rem; color: var(--muted); text-decoration: none; margin-left: auto;
+    transition: color .2s;
+  }
+  .cancel-link:hover { color: var(--ink); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-wrap">
+  <div class="form-sidebar fade-up">
+    <div>
+      <h1>{% if article %}Upravit<br><em>článek</em>{% else %}Nový<br><em>článek</em>{% endif %}</h1>
+      <p>Vyplňte všechna povinná pole. Slug musí být jedinečný a slouží jako URL adresa článku.</p>
+    </div>
+    {% if article %}
+    <a href="{% url 'article_detail' article.slug %}" style="font-size:.82rem;color:var(--muted);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;">← Zpět na článek</a>
+    {% else %}
+    <a href="{% url 'article_list' %}" style="font-size:.82rem;color:var(--muted);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;">← Zpět na seznam</a>
+    {% endif %}
+  </div>
+
+  <div class="form-main fade-up-2">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <label class="form-label" for="{{ form.title.id_for_label }}">Název *</label>
+      {{ form.title }}
+      {% if form.title.errors %}<p class="form-error">{{ form.title.errors|join:", " }}</p>{% endif %}
+
+      <div class="form-row-2">
+        <div>
+          <label class="form-label" for="{{ form.slug.id_for_label }}">URL slug *</label>
+          {{ form.slug }}
+          <p class="slug-hint">Např. muj-prvni-clanek</p>
+          {% if form.slug.errors %}<p class="form-error">{{ form.slug.errors|join:", " }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="form-label" for="{{ form.author.id_for_label }}">Autor *</label>
+          {{ form.author }}
+          {% if form.author.errors %}<p class="form-error">{{ form.author.errors|join:", " }}</p>{% endif %}
+        </div>
+      </div>
+
+      <label class="form-label" for="{{ form.perex.id_for_label }}">Perex *</label>
+      {{ form.perex }}
+      {% if form.perex.errors %}<p class="form-error">{{ form.perex.errors|join:", " }}</p>{% endif %}
+
+      <label class="form-label" for="{{ form.content.id_for_label }}">Obsah *</label>
+      {{ form.content }}
+      {% if form.content.errors %}<p class="form-error">{{ form.content.errors|join:", " }}</p>{% endif %}
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-fill">{{ action }}</button>
+        {% if article %}
+          <a href="{% url 'article_detail' article.slug %}" class="cancel-link">Zrušit</a>
+        {% else %}
+          <a href="{% url 'article_list' %}" class="cancel-link">Zrušit</a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Auto-generate slug from title if slug is empty
+  const titleEl = document.getElementById('{{ form.title.id_for_label }}');
+  const slugEl  = document.getElementById('{{ form.slug.id_for_label }}');
+  let slugEdited = slugEl.value.trim() !== '';
+
+  slugEl.addEventListener('input', () => { slugEdited = true; });
+
+  titleEl.addEventListener('input', () => {
+    if (slugEdited) return;
+    slugEl.value = titleEl.value
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim().replace(/\s+/g, '-');
+  });
+</script>
+{% endblock %}

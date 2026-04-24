@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}{{ article.title }} – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .article-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 3rem 6rem;
+  }
+  .back-link {
+    display: inline-block; margin-bottom: 3rem;
+    font-size: .78rem; font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color .2s;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  .article-meta {
+    display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  }
+  .article-meta span { display: flex; align-items: center; gap: .4rem; }
+
+  .article-wrap h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.08; letter-spacing: -.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-perex {
+    font-size: 1.1rem; color: var(--muted);
+    line-height: 1.75; margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(15,14,12,.12);
+  }
+
+  .article-body {
+    font-size: 1rem; line-height: 1.85;
+    white-space: pre-wrap;
+    color: #2a2722;
+  }
+
+  .article-actions {
+    display: flex; gap: 1rem; margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(15,14,12,.12);
+    flex-wrap: wrap; align-items: center;
+  }
+  .updated-note {
+    margin-left: auto; font-size: .78rem; color: var(--muted);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="article-wrap fade-up">
+  <a class="back-link" href="{% url 'article_list' %}">← Zpět na seznam</a>
+
+  <div class="article-meta">
+    <span>✍ {{ article.author }}</span>
+    <span>📅 {{ article.created_at|date:"d. m. Y" }}</span>
+  </div>
+
+  <h1>{{ article.title }}</h1>
+  <p class="article-perex">{{ article.perex }}</p>
+  <div class="article-body">{{ article.content }}</div>
+
+  <div class="article-actions">
+    <a href="{% url 'article_update' article.slug %}" class="btn btn-outline">Upravit</a>
+    <a href="{% url 'article_delete' article.slug %}" class="btn btn-danger">Smazat</a>
+    <span class="updated-note">Upraveno: {{ article.updated_at|date:"d. m. Y H:i" }}</span>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block title %}Blog – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .blog-header {
+    padding: 5rem 3rem 3rem;
+    border-bottom: 1px solid rgba(15,14,12,.1);
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .blog-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -.03em; line-height: 1.05;
+  }
+  .blog-header h1 em { color: var(--accent); font-style: italic; }
+
+  .search-form {
+    display: flex; gap: .5rem; align-items: flex-end;
+  }
+  .search-form input {
+    background: transparent;
+    border: none; border-bottom: 1.5px solid rgba(15,14,12,.3);
+    padding: .5rem 0; font-family: 'DM Sans', sans-serif;
+    font-size: .9rem; color: var(--ink); outline: none; width: 200px;
+    transition: border-color .2s;
+  }
+  .search-form input:focus { border-color: var(--ink); }
+  .search-form button {
+    background: none; border: none; cursor: pointer;
+    font-size: .78rem; font-weight: 500; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); padding: .5rem 0;
+    transition: color .2s;
+  }
+  .search-form button:hover { color: var(--ink); }
+
+  .blog-toolbar {
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid rgba(15,14,12,.08);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .blog-count { font-size: .82rem; color: var(--muted); }
+
+  .article-grid {
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1px;
+    background: rgba(15,14,12,.08);
+  }
+  .article-card {
+    background: var(--paper);
+    padding: 2.2rem 2rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: background .2s;
+  }
+  .article-card:hover { background: #ede8df; }
+
+  .card-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  }
+  .article-card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem; line-height: 1.2; letter-spacing: -.02em;
+  }
+  .article-card h2 a { color: var(--ink); text-decoration: none; }
+  .article-card h2 a:hover { color: var(--accent); }
+  .article-card p { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+
+  .card-actions { display: flex; gap: .8rem; margin-top: auto; padding-top: .5rem; }
+  .card-actions a {
+    font-size: .72rem; font-weight: 500; letter-spacing: .08em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--muted); transition: color .2s;
+  }
+  .card-actions a:hover { color: var(--ink); }
+  .card-actions a.del:hover { color: var(--accent); }
+
+  .empty-state {
+    padding: 6rem 3rem; text-align: center;
+  }
+  .empty-state p { color: var(--muted); margin-bottom: 2rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="blog-header fade-up">
+  <h1>Všechny<br><em>články</em></h1>
+  <form class="search-form" method="get">
+    <input type="text" name="q" value="{{ q }}" placeholder="Hledat…" />
+    <button type="submit">Hledat</button>
+    {% if q %}<a href="{% url 'article_list' %}" style="font-size:.78rem;color:var(--muted);text-decoration:none;padding:.5rem 0">✕</a>{% endif %}
+  </form>
+</div>
+
+<div class="blog-toolbar fade-up-2">
+  <span class="blog-count">
+    {% if q %}Výsledky pro „{{ q }}": {% endif %}
+    {{ articles.count }} článk{% if articles.count == 1 %}ek{% else %}ů{% endif %}
+  </span>
+  <a href="{% url 'article_create' %}" class="btn btn-fill">+ Nový článek</a>
+</div>
+
+{% if articles %}
+<div class="article-grid">
+  {% for article in articles %}
+  <div class="article-card fade-up">
+    <div class="card-meta">
+      <span>{{ article.author }}</span>
+      <span>{{ article.created_at|date:"d. m. Y" }}</span>
+    </div>
+    <h2><a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a></h2>
+    <p>{{ article.perex|truncatechars:120 }}</p>
+    <div class="card-actions">
+      <a href="{% url 'article_detail' article.slug %}">Číst →</a>
+      <a href="{% url 'article_update' article.slug %}">Upravit</a>
+      <a href="{% url 'article_delete' article.slug %}" class="del">Smazat</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state fade-up">
+  {% if q %}
+    <p>Žádné články neodpovídají hledání „{{ q }}".</p>
+    <a href="{% url 'article_list' %}" class="btn btn-outline">Zobrazit vše</a>
+  {% else %}
+    <p>Zatím zde nejsou žádné články.</p>
+    <a href="{% url 'article_create' %}" class="btn btn-fill">Napsat první článek</a>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

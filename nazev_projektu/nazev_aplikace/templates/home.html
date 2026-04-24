@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Home – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .hero-home {
+    min-height: calc(80vh - 72px);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-home::after {
+    content: '';
+    position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,79,42,.13) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .hero-home h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.02; letter-spacing: -.04em;
+    max-width: 800px;
+  }
+  .hero-home h1 em { color: var(--accent); font-style: italic; }
+  .hero-home .sub {
+    margin-top: 1.5rem; max-width: 500px;
+    color: var(--muted); line-height: 1.75; font-size: 1.05rem;
+  }
+  .btn-row { margin-top: 2.5rem; display: flex; gap: 1rem; }
+  .btn {
+    display: inline-block; padding: .85rem 2rem;
+    font-size: .88rem; font-weight: 500; letter-spacing: .06em;
+    text-transform: uppercase; text-decoration: none;
+    border: 1.5px solid var(--ink);
+    transition: background .2s, color .2s;
+  }
+  .btn-fill { background: var(--ink); color: var(--paper); }
+  .btn-fill:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+  .cards {
+    padding: 4rem 3rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5px;
+    background: rgba(15,14,12,.1);
+    border-top: 1.5px solid rgba(15,14,12,.1);
+  }
+  .card {
+    background: var(--paper); padding: 2.5rem 2rem;
+    transition: background .2s;
+  }
+  .card:hover { background: #eee8da; }
+  .card-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem; color: var(--accent); line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .card h3 { font-size: 1rem; font-weight: 500; margin-bottom: .5rem; }
+  .card p { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero-home">
+  <p class="eyebrow fade-up">Vítejte</p>
+  <h1 class="fade-up-2">Tvoříme věci,<br>na <em>kterých</em> záleží.</h1>
+  <p class="sub fade-up-3">Jednoduchý Django web se třemi stránkami — Home, About a Contact. Proklikejte se a prozkoumejte.</p>
+  <div class="btn-row fade-up-3">
+    <a href="{% url 'about' %}" class="btn btn-fill">O nás</a>
+    <a href="{% url 'contact' %}" class="btn btn-outline">Kontakt</a>
+    <a href="{% url 'zkusebni_stranka' %}" class="btn btn-fill">Zkušební stránka</a>
+  </div>
+</section>
+
+<div class="cards">
+  <div class="card fade-up">
+    <div class="card-num">01</div>
+    <h3>Rychlost</h3>
+    <p>Stránky se načítají okamžitě díky čistému HTML a minimálnímu CSS bez zbytečných závislostí.</p>
+  </div>
+  <div class="card fade-up-2">
+    <div class="card-num">02</div>
+    <h3>Přehlednost</h3>
+    <p>Navigace je vždy viditelná a aktuální stránka je jasně označena pro snadnou orientaci.</p>
+  </div>
+  <div class="card fade-up-3">
+    <div class="card-num">03</div>
+    <h3>Rozšiřitelnost</h3>
+    <p>Šablonovací systém Django umožňuje snadno přidávat nové stránky bez opakování kódu.</p>
+  </div>
+</div>
+{% endblock %}

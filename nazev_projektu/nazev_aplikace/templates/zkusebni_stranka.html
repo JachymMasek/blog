@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}O nás – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .about-grid {
+    padding: 5rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    border-bottom: 1px solid rgba(15,14,12,.1);
+  }
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+  .about-grid h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.08; letter-spacing: -.03em;
+  }
+  .about-grid h1 em { color: var(--accent); font-style: italic; }
+
+  .about-text p {
+    color: var(--muted); line-height: 1.8; font-size: 1rem; margin-bottom: 1.2rem;
+  }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .divider {
+    width: 40px; height: 2px;
+    background: var(--accent);
+    margin: 2rem 0;
+  }
+
+  .team {
+    padding: 4rem 3rem;
+    border-bottom: 1px solid rgba(15,14,12,.1);
+  }
+  .team-label {
+    font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 2.5rem;
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+  }
+  .member { border-top: 1.5px solid var(--ink); padding-top: 1rem; }
+  .member-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--paper);
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .member h3 { font-size: .95rem; font-weight: 500; }
+  .member span { font-size: .8rem; color: var(--muted); }
+
+  .values {
+    padding: 4rem 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }
+  .value-item { padding: 2rem; border: 1px solid rgba(15,14,12,.12); }
+  .value-item h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem; margin-bottom: .6rem;
+  }
+  .value-item p { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-grid">
+  <div class="fade-up">
+    <h1>Zkušební <em>stránka</em></h1>
+    <div class="divider"></div>
+    <p>Tohle funguje</p>
+  </div>
+  <div class="about-text fade-up-2">
+    <p>Jo</p>
+    <p>Text tady---></p>
+    <p>Stránka</p>
+  </div>
+</div>
+
+
+
+<div class="values">
+  <div class="value-item fade-up">
+    <h3>Poctivost</h3>
+    <p>Žádné AI použito ❌❌❌</p>
+  </div>
+  <div class="value-item fade-up-2">
+    <h3>Poctivost 2. díl</h3>
+    <p>To byla možná lež...</p>
+  </div>
+  <div class="value-item fade-up-3">
+    <h3>3. bod</h3>
+    <p>bod</p>
+  </div>
+</div>
+{% endblock %}
