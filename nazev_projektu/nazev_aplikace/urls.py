@@ -9,6 +9,8 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path('zkusebni_stranka/', views.zkusebni_stranka, name='zkusebni_stranka'),
 
+    path("login/", views.login_view, name="login"),
+    path("logout/", views.logout_view, name="logout"),
 
     # Blog CRUD
     path("blog/", views.article_list, name="article_list"),
