@@ -69,8 +69,12 @@
   <div class="article-body">{{ article.content }}</div>
 
   <div class="article-actions">
+    {% if user.is_authenticated %}
     <a href="{% url 'article_update' article.slug %}" class="btn btn-outline">Upravit</a>
     <a href="{% url 'article_delete' article.slug %}" class="btn btn-danger">Smazat</a>
+    {% else %}
+    <a href="{% url 'login' %}" class="btn btn-outline">Přihlásit se pro úpravy</a>
+    {% endif %}
     <span class="updated-note">Upraveno: {{ article.updated_at|date:"d. m. Y H:i" }}</span>
   </div>
 </div>

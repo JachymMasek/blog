@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Přihlášení – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .login-wrap {
+    min-height: calc(90vh - 72px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 3rem;
+  }
+  .login-box {
+    width: 100%; max-width: 440px;
+  }
+  .login-eyebrow {
+    font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .login-box h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem; letter-spacing: -.03em; line-height: 1.05;
+    margin-bottom: 2.5rem;
+  }
+  .login-box h1 em { color: var(--accent); font-style: italic; }
+
+  .field { margin-bottom: 2rem; }
+  .field label {
+    display: block;
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: .5rem;
+  }
+  .field input {
+    width: 100%; background: transparent;
+    border: none; border-bottom: 1.5px solid rgba(15,14,12,.25);
+    padding: .6rem 0;
+    font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--ink);
+    outline: none; transition: border-color .2s;
+  }
+  .field input:focus { border-color: var(--ink); }
+
+  .login-error {
+    background: rgba(201,79,42,.08);
+    border-left: 3px solid var(--accent);
+    padding: .75rem 1rem;
+    font-size: .88rem; color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .login-actions {
+    display: flex; align-items: center; gap: 1.5rem; margin-top: 2.5rem;
+  }
+  .hint {
+    font-size: .78rem; color: var(--muted); line-height: 1.6; margin-top: 2.5rem;
+    padding-top: 1.5rem; border-top: 1px solid rgba(15,14,12,.1);
+  }
+  .hint code {
+    font-family: monospace; background: rgba(15,14,12,.07);
+    padding: .1rem .4rem; font-size: .82rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-wrap">
+  <div class="login-box fade-up">
+    <p class="login-eyebrow">Administrace blogu</p>
+    <h1>Přihlaste<br>se <em>prosím</em></h1>
+
+    {% if error %}
+    <div class="login-error">{{ error }}</div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}" />
+      {% endif %}
+
+      <div class="field">
+        <label for="username">Uživatelské jméno</label>
+        <input type="text" id="username" name="username" autofocus autocomplete="username" />
+      </div>
+      <div class="field">
+        <label for="password">Heslo</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" />
+      </div>
+
+      <div class="login-actions">
+        <button type="submit" class="btn btn-fill">Přihlásit se</button>
+        <a href="{% url 'article_list' %}" style="font-size:.82rem;color:var(--muted);text-decoration:none;">Zpět na blog</a>
+      </div>
+    </form>
+
+    <hr style="border:none;border-top:1px solid rgba(15,14,12,.12);margin:2.5rem 0;position:relative;" />
+    <a href="{% url 'register' %}" style="display:block;text-align:center;font-size:.88rem;color:var(--muted);text-decoration:none;transition:color .2s;">
+      Nemáte účet? <span style="color:var(--ink);font-weight:500;border-bottom:1px solid currentColor;">Zaregistrujte se</span>
+    </a>
+  </div>
+</div>
+{% endblock %}

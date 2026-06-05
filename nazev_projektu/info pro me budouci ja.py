@@ -1,3 +1,3 @@
-#views urls a settings uz jsem asi udelal idk
-#delame prihlasovani kvuli psani
-#jop to je to
+#Začal jsem dělat design
+#Zeptal jsem see claudea na vylepšení mazání a upravování příspěvků ale došly tickety
+#To je vše myslim ig lmao

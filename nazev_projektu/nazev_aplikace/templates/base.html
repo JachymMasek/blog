@@ -10,44 +10,56 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:   #0f0e0c;
-      --paper: #f5f0e8;
-      --accent:#c94f2a;
-      --muted: #8a8070;
+      --paper:  #d1c968;
+      --accent: #7b7d35;
+      --ink:    #1c1b14;
+      --muted:  #555239;
       --nav-h: 72px;
+      --green: #6f8a3d;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--paper);
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,.03),
+          rgba(255,255,255,.03)
+        ),
+        #cfc76a;
+
       color: var(--ink);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
     }
 
-    /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       height: var(--nav-h);
-      display: flex; align-items: center; justify-content: space-between;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
       padding: 0 3rem;
-      background: var(--paper);
-      border-bottom: 1px solid rgba(15,14,12,.12);
+
+      background: #64651f;
+      border-bottom: 1px solid rgba(0,0,0,.25);
+
       z-index: 100;
     }
 
+
     .logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.4rem;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -.02em;
+      color: #f0efc8;
     }
-    .logo span { color: var(--accent); }
+
+    .logo span {
+      color: #d8db75;
+    }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; }
 
@@ -72,11 +84,30 @@
     .nav-links a:hover, .nav-links a.active { color: var(--ink); }
     .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
 
-    /* ── MAIN ── */
     main {
       flex: 1;
       margin-top: var(--nav-h);
       padding: 0;
+    }
+
+    /* ── FLASH MESSAGES ── */
+    .messages {
+      position: fixed; top: calc(var(--nav-h) + 1rem);
+      right: 1.5rem; z-index: 200;
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .message {
+      padding: .75rem 1.2rem;
+      font-size: .88rem; font-weight: 500;
+      border-left: 3px solid var(--green);
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,.1);
+      animation: slideIn .3s ease;
+    }
+    .message.error { border-color: var(--accent); }
+    @keyframes slideIn {
+      from { opacity:0; transform: translateX(20px); }
+      to   { opacity:1; transform: translateX(0); }
     }
 
     /* ── HERO BAND ── */
@@ -95,7 +126,6 @@
       pointer-events: none;
       line-height: 1;
     }
-
     .page-hero h1 {
       font-family: 'DM Serif Display', serif;
       font-size: clamp(2.5rem, 6vw, 5rem);
@@ -103,10 +133,7 @@
       letter-spacing: -.03em;
       max-width: 700px;
     }
-    .page-hero h1 em {
-      color: var(--accent);
-      font-style: italic;
-    }
+    .page-hero h1 em { color: var(--accent); font-style: italic; }
     .page-hero p {
       margin-top: 1.2rem;
       max-width: 520px;
@@ -115,13 +142,8 @@
       font-size: 1.05rem;
     }
 
-    /* ── CONTENT AREA ── */
-    .content {
-      padding: 4rem 3rem;
-      max-width: 900px;
-    }
+    .content { padding: 4rem 3rem; max-width: 900px; }
 
-    /* ── FOOTER ── */
     footer {
       border-top: 1px solid rgba(15,14,12,.12);
       padding: 1.5rem 3rem;
@@ -130,14 +152,65 @@
       color: var(--muted);
     }
 
-    /* ── ANIMATE IN ── */
     @keyframes fadeUp {
       from { opacity:0; transform: translateY(18px); }
       to   { opacity:1; transform: translateY(0); }
     }
-    .fade-up { animation: fadeUp .55s ease both; }
+    .fade-up   { animation: fadeUp .55s ease both; }
     .fade-up-2 { animation: fadeUp .55s .1s ease both; }
     .fade-up-3 { animation: fadeUp .55s .2s ease both; }
+
+    /* ── SHARED FORM STYLES ── */
+    .form-input {
+      width: 100%; background: transparent;
+      border: none; border-bottom: 1.5px solid rgba(15,14,12,.25);
+      padding: .6rem 0;
+      font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--ink);
+      outline: none; transition: border-color .2s; resize: vertical;
+    }
+    .form-input:focus { border-color: var(--ink); }
+
+    .btn {
+      display: inline-block; padding: .85rem 2rem;
+      font-size: .88rem; font-weight: 500; letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background .2s, color .2s;
+    }
+    .btn-fill   { background: var(--ink); color: var(--paper); border: 1.5px solid var(--ink); }
+    .btn-fill:hover { background: var(--accent); border-color: var(--accent); }
+    .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+    .btn-outline:hover { background: var(--ink); color: var(--paper); }
+    .btn-danger { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+    .btn-danger:hover { background: var(--accent); color: var(--paper); }
+
+    .nav-auth { display: flex; align-items: center; gap: 1rem; }
+    .nav-user {
+      font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); padding: .3rem .7rem;
+      border: 1px solid rgba(15,14,12,.15); border-radius: 2px;
+    }
+    .nav-register {
+      font-size: .78rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--ink); border: 1.5px solid rgba(15,14,12,.3);
+      padding: .45rem 1rem; transition: border-color .2s, color .2s;
+    }
+    .nav-register:hover { border-color: var(--ink); }
+    .nav-login {
+      font-size: .78rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--paper); background: var(--ink);
+      padding: .45rem 1rem; transition: background .2s;
+    }
+    .nav-login:hover { background: var(--accent); }
+    .nav-logout {
+      font-size: .78rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; cursor: pointer;
+      color: var(--muted); background: none; border: none;
+      padding: 0; transition: color .2s; font-family: 'DM Sans', sans-serif;
+    }
+    .nav-logout:hover { color: var(--accent); }
   </style>
   {% block extra_head %}{% endblock %}
 </head>
@@ -146,13 +219,35 @@
 <nav>
   <a class="logo" href="{% url 'home' %}">My<span>Site</span></a>
   <ul class="nav-links">
-    <li><a href="{% url 'home' %}"    {% if request.resolver_match.url_name == 'home'    %}class="active"{% endif %}>Home</a></li>
-    <li><a href="{% url 'about' %}"   {% if request.resolver_match.url_name == 'about'   %}class="active"{% endif %}>About</a></li>
-    <li><a href="{% url 'contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %}>Contact</a></li>
-    <li><a href="{% url 'zkusebni_stranka' %}" {% if request.resolver_match.url_name == 'zkusebni_stranka' %}class="active"{% endif %}>Zkušební stránka</a></li>
-    <li><a href="{% url 'article_list' %}" {% if request.resolver_match.url_name == 'article_list' %}class="active"{% endif %}>Blog</a></li>
+    <li><a href="{% url 'home' %}"         {% if request.resolver_match.url_name == 'home'         %}class="active"{% endif %}>Home</a></li>
+    <li><a href="{% url 'about' %}"        {% if request.resolver_match.url_name == 'about'        %}class="active"{% endif %}>About</a></li>
+    <li><a href="{% url 'article_list' %}" {% if 'article' in request.resolver_match.url_name      %}class="active"{% endif %}>Blog</a></li>
+    <li><a href="{% url 'contact' %}"      {% if request.resolver_match.url_name == 'contact'      %}class="active"{% endif %}>Contact</a></li>
   </ul>
+  <div class="nav-auth">
+    {% if user.is_authenticated %}
+      <span class="nav-user">{{ user.username }}</span>
+      <form method="post" action="{% url 'logout' %}" style="display:inline">
+        {% csrf_token %}
+        <button type="submit" class="nav-logout">Odhlásit</button>
+      </form>
+    {% else %}
+      <a href="{% url 'register' %}" class="nav-register">Registrace</a>
+      <a href="{% url 'login' %}" class="nav-login">Přihlásit se</a>
+    {% endif %}
+  </div>
 </nav>
+
+{% if messages %}
+<div class="messages">
+  {% for msg in messages %}
+    <div class="message {% if msg.tags == 'error' %}error{% endif %}">{{ msg }}</div>
+  {% endfor %}
+</div>
+<script>
+  setTimeout(() => document.querySelectorAll('.message').forEach(m => m.style.opacity = '0'), 3500);
+</script>
+{% endif %}
 
 <main>
   {% block content %}{% endblock %}

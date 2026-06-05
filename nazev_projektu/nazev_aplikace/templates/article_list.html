@@ -100,7 +100,7 @@
     {% if q %}Výsledky pro „{{ q }}": {% endif %}
     {{ articles.count }} článk{% if articles.count == 1 %}ek{% else %}ů{% endif %}
   </span>
-  <a href="{% url 'article_create' %}" class="btn btn-fill">+ Nový článek</a>
+  {% if user.is_authenticated %}<a href="{% url 'article_create' %}" class="btn btn-fill">+ Nový článek</a>{% else %}<a href="{% url 'login' %}" class="btn btn-outline">Přihlásit se pro psaní</a>{% endif %}
 </div>
 
 {% if articles %}
@@ -115,8 +115,10 @@
     <p>{{ article.perex|truncatechars:120 }}</p>
     <div class="card-actions">
       <a href="{% url 'article_detail' article.slug %}">Číst →</a>
+      {% if user.is_authenticated %}
       <a href="{% url 'article_update' article.slug %}">Upravit</a>
       <a href="{% url 'article_delete' article.slug %}" class="del">Smazat</a>
+      {% endif %}
     </div>
   </div>
   {% endfor %}
@@ -128,7 +130,7 @@
     <a href="{% url 'article_list' %}" class="btn btn-outline">Zobrazit vše</a>
   {% else %}
     <p>Zatím zde nejsou žádné články.</p>
-    <a href="{% url 'article_create' %}" class="btn btn-fill">Napsat první článek</a>
+    {% if user.is_authenticated %}<a href="{% url 'article_create' %}" class="btn btn-fill">Napsat první článek</a>{% else %}<a href="{% url 'login' %}" class="btn btn-fill">Přihlásit se a napsat</a>{% endif %}
   {% endif %}
 </div>
 {% endif %}

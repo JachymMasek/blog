@@ -6,19 +6,24 @@
 <style>
   .hero-home {
     min-height: calc(80vh - 72px);
-    display: flex; flex-direction: column; justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;   /* nové */
+    text-align: center;    /* nové */
+
     padding: 5rem 3rem;
     position: relative;
     overflow: hidden;
   }
-  .hero-home::after {
-    content: '';
-    position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
-    width: 480px; height: 480px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,79,42,.13) 0%, transparent 70%);
-    pointer-events: none;
+
+  .hero-home h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(5rem, 12vw, 9rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
   }
+
   .eyebrow {
     font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
     color: var(--accent); font-weight: 500;
@@ -71,13 +76,14 @@
 
 {% block content %}
 <section class="hero-home">
-  <p class="eyebrow fade-up">Vítejte</p>
-  <h1 class="fade-up-2">Tvoříme věci,<br>na <em>kterých</em> záleží.</h1>
-  <p class="sub fade-up-3">Jednoduchý Django web se třemi stránkami — Home, About a Contact. Proklikejte se a prozkoumejte.</p>
+  <p class="eyebrow fade-up">Vítejte v</p>
+  <h1 class="fade-up-2">
+    Backrooms
+  </h1>
+  <p class="sub fade-up-3">Blog o web sérii a filmu "Backrooms" od Kanea Parsonse</p>
   <div class="btn-row fade-up-3">
-    <a href="{% url 'about' %}" class="btn btn-fill">O nás</a>
-    <a href="{% url 'contact' %}" class="btn btn-outline">Kontakt</a>
-    <a href="{% url 'zkusebni_stranka' %}" class="btn btn-fill">Zkušební stránka</a>
+    <a href="{% url 'about' %}" class="btn btn-fill">Videa</a>
+    <a href="{% url 'contact' %}" class="btn btn-outline">Film</a>
   </div>
 </section>
 

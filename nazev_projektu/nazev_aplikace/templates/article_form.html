@@ -52,6 +52,21 @@
     transition: color .2s;
   }
   .cancel-link:hover { color: var(--ink); }
+
+  .author-badge {
+    display: inline-flex; align-items: center; gap: .7rem;
+    margin: 1.8rem 0;
+    padding: .6rem 1rem;
+    border: 1px solid rgba(15,14,12,.15);
+    background: rgba(15,14,12,.03);
+  }
+  .author-badge-label {
+    font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  .author-badge-name {
+    font-size: .92rem; font-weight: 500; color: var(--ink);
+  }
+  .author-badge-name::before { content: '👤 '; }
 </style>
 {% endblock %}
 
@@ -77,18 +92,14 @@
       {{ form.title }}
       {% if form.title.errors %}<p class="form-error">{{ form.title.errors|join:", " }}</p>{% endif %}
 
-      <div class="form-row-2">
-        <div>
-          <label class="form-label" for="{{ form.slug.id_for_label }}">URL slug *</label>
-          {{ form.slug }}
-          <p class="slug-hint">Např. muj-prvni-clanek</p>
-          {% if form.slug.errors %}<p class="form-error">{{ form.slug.errors|join:", " }}</p>{% endif %}
-        </div>
-        <div>
-          <label class="form-label" for="{{ form.author.id_for_label }}">Autor *</label>
-          {{ form.author }}
-          {% if form.author.errors %}<p class="form-error">{{ form.author.errors|join:", " }}</p>{% endif %}
-        </div>
+      <label class="form-label" for="{{ form.slug.id_for_label }}">URL slug *</label>
+      {{ form.slug }}
+      <p class="slug-hint">Např. muj-prvni-clanek</p>
+      {% if form.slug.errors %}<p class="form-error">{{ form.slug.errors|join:", " }}</p>{% endif %}
+
+      <div class="author-badge">
+        <span class="author-badge-label">Autor článku</span>
+        <span class="author-badge-name">{{ request.user.username }}</span>
       </div>
 
       <label class="form-label" for="{{ form.perex.id_for_label }}">Perex *</label>

@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block title %}Registrace – MySite{% endblock %}
+
+{% block extra_head %}
+<style>
+  .auth-wrap {
+    min-height: calc(90vh - 72px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 3rem;
+  }
+  .auth-box { width: 100%; max-width: 480px; }
+
+  .auth-eyebrow {
+    font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .auth-box h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem; letter-spacing: -.03em; line-height: 1.05;
+    margin-bottom: 2.5rem;
+  }
+  .auth-box h1 em { color: var(--accent); font-style: italic; }
+
+  .field { margin-bottom: 1.8rem; }
+  .field label {
+    display: block;
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: .5rem;
+  }
+  .field input {
+    width: 100%; background: transparent;
+    border: none; border-bottom: 1.5px solid rgba(15,14,12,.25);
+    padding: .6rem 0;
+    font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--ink);
+    outline: none; transition: border-color .2s;
+  }
+  .field input:focus { border-color: var(--ink); }
+  .field input.has-error { border-color: var(--accent); }
+
+  .field-error {
+    font-size: .78rem; color: var(--accent); margin-top: .4rem;
+  }
+  .field-hint {
+    font-size: .75rem; color: var(--muted); margin-top: .3rem;
+  }
+
+  .form-row-2 {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
+  @media (max-width: 520px) { .form-row-2 { grid-template-columns: 1fr; gap: 0; } }
+
+  .auth-actions {
+    display: flex; align-items: center; gap: 1.5rem; margin-top: 2.5rem;
+  }
+
+  .divider {
+    margin: 2.5rem 0;
+    border: none; border-top: 1px solid rgba(15,14,12,.12);
+    position: relative;
+  }
+  .divider::after {
+    content: 'nebo';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    background: var(--paper); padding: 0 .8rem;
+    font-size: .75rem; letter-spacing: .08em; color: var(--muted);
+  }
+
+  .login-link {
+    display: block; text-align: center;
+    font-size: .88rem; color: var(--muted); text-decoration: none;
+    transition: color .2s;
+  }
+  .login-link span { color: var(--ink); font-weight: 500; border-bottom: 1px solid currentColor; }
+  .login-link:hover span { color: var(--accent); }
+
+  /* password strength bar */
+  .strength-bar {
+    height: 2px; margin-top: .5rem;
+    background: rgba(15,14,12,.1);
+    border-radius: 2px; overflow: hidden;
+  }
+  .strength-fill {
+    height: 100%; width: 0; transition: width .3s, background .3s;
+  }
+  .strength-label {
+    font-size: .7rem; color: var(--muted); margin-top: .25rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-box fade-up">
+    <p class="auth-eyebrow">Nový účet</p>
+    <h1>Zaregistrujte<br>se <em>zdarma</em></h1>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="username">Uživatelské jméno *</label>
+        <input
+          type="text" id="username" name="username"
+          value="{{ post.username|default:'' }}"
+          autofocus autocomplete="username"
+          class="{% if errors.username %}has-error{% endif %}"
+        />
+        {% if errors.username %}
+          <p class="field-error">{{ errors.username }}</p>
+        {% else %}
+          <p class="field-hint">Pouze písmena, číslice a znaky @/./+/-/_</p>
+        {% endif %}
+      </div>
+
+      <div class="field">
+        <label for="email">E-mail <span style="color:var(--muted);font-size:.9em">(nepovinný)</span></label>
+        <input
+          type="email" id="email" name="email"
+          value="{{ post.email|default:'' }}"
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="form-row-2">
+        <div class="field">
+          <label for="password1">Heslo *</label>
+          <input
+            type="password" id="password1" name="password1"
+            autocomplete="new-password"
+            class="{% if errors.password1 %}has-error{% endif %}"
+          />
+          <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+          <p class="strength-label" id="strengthLabel"></p>
+          {% if errors.password1 %}
+            <p class="field-error">{{ errors.password1 }}</p>
+          {% endif %}
+        </div>
+        <div class="field">
+          <label for="password2">Heslo znovu *</label>
+          <input
+            type="password" id="password2" name="password2"
+            autocomplete="new-password"
+            class="{% if errors.password2 %}has-error{% endif %}"
+          />
+          {% if errors.password2 %}
+            <p class="field-error">{{ errors.password2 }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="auth-actions">
+        <button type="submit" class="btn btn-fill">Vytvořit účet</button>
+      </div>
+    </form>
+
+    <hr class="divider" />
+    <a class="login-link" href="{% url 'login' %}">Již máte účet? <span>Přihlaste se</span></a>
+  </div>
+</div>
+
+<script>
+  const pw = document.getElementById('password1');
+  const fill = document.getElementById('strengthFill');
+  const label = document.getElementById('strengthLabel');
+  const colors = ['#c94f2a','#e08c3a','#d4b84a','#2a7a4f'];
+  const labels = ['Velmi slabé','Slabé','Dobré','Silné'];
+
+  pw.addEventListener('input', () => {
+    const v = pw.value;
+    let score = 0;
+    if (v.length >= 8)  score++;
+    if (/[A-Z]/.test(v)) score++;
+    if (/[0-9]/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    if (!v) { fill.style.width = '0'; label.textContent = ''; return; }
+    fill.style.width = (score * 25) + '%';
+    fill.style.background = colors[score - 1] || colors[0];
+    label.textContent = labels[score - 1] || labels[0];
+  });
+</script>
+{% endblock %}
