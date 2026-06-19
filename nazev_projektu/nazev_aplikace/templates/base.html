@@ -221,8 +221,8 @@
   <ul class="nav-links">
     <li><a href="{% url 'home' %}"         {% if request.resolver_match.url_name == 'home'         %}class="active"{% endif %}>Home</a></li>
     <li><a href="{% url 'about' %}"        {% if request.resolver_match.url_name == 'about'        %}class="active"{% endif %}>About</a></li>
-    <li><a href="{% url 'article_list' %}" {% if 'article' in request.resolver_match.url_name      %}class="active"{% endif %}>Blog</a></li>
     <li><a href="{% url 'contact' %}"      {% if request.resolver_match.url_name == 'contact'      %}class="active"{% endif %}>Contact</a></li>
+    <li><a href="{% url 'article_list' %}" {% if 'article' in request.resolver_match.url_name      %}class="active"{% endif %}>Blog</a></li>
   </ul>
   <div class="nav-auth">
     {% if user.is_authenticated %}
