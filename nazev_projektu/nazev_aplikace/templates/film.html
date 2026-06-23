@@ -4,14 +4,14 @@
 
 {% block extra_head %}
 <style>
-  .about-section {
+  .film-section {
     max-width: 900px;
     margin: 0 auto;
     padding: 6rem 3rem;
     text-align: center;
   }
 
-  .about-section h1 {
+  .film-section h1 {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(3rem, 6vw, 5rem);
     line-height: 1.05;
@@ -19,7 +19,7 @@
     margin-bottom: 2rem;
   }
 
-  .about-section h1 em {
+  .film-section h1 em {
     color: var(--accent);
     font-style: italic;
   }
@@ -31,7 +31,7 @@
     margin: 0 auto 2.5rem;
   }
 
-  .about-section p {
+  .film-section p {
     max-width: 700px;
     margin: 0 auto 1.5rem;
     color: var(--muted);
@@ -39,11 +39,11 @@
     font-size: 1.05rem;
   }
 
-  .about-section p:last-of-type {
+  .film-section p:last-of-type {
     margin-bottom: 2.5rem;
   }
 
-  .about-link {
+  .film-link {
     display: inline-block;
     color: var(--accent);
     text-decoration: none;
@@ -53,14 +53,14 @@
     text-transform: uppercase;
   }
 
-  .about-link:hover {
+  .film-link:hover {
     text-decoration: underline;
   }
 </style>
 {% endblock %}
 
 {% block content %}
-<section class="about-section">
+<section class="film-section">
   <h1 class="fade-up">O <em>Backrooms</em></h1>
 
   <div class="divider fade-up-2"></div>
@@ -83,7 +83,7 @@
     krátká videa a příspěvky na sociálních sítích.
   </p>
 
-  <a href="{% url 'article_list' %}" class="about-link fade-up-3">
+  <a href="{% url 'article_list' %}" class="film-link fade-up-3">
     Prozkoumat články →
   </a>
 </section>
