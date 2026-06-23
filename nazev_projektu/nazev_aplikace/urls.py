@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     # Statické stránky
     path("",         views.home,    name="home"),
-    path("about/",   views.about,   name="about"),
+    path("serie/",   views.serie,   name="serie"),
     path("contact/", views.contact, name="contact"),
     path("film/", views.film, name="film"),
 

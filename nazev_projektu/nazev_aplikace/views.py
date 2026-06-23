@@ -35,8 +35,8 @@ def home(request):
     latest = Article.objects.all()[:3]
     return render(request, "home.html", {"latest": latest})
 
-def about(request):
-    return render(request, "about.html")
+def serie(request):
+    return render(request, "serie.html")
 
 def film(request):
     return render(request, "film.html")
