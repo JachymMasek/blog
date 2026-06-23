@@ -41,6 +41,9 @@ def about(request):
 def contact(request):
     return render(request, "contact.html")
 
+def film(request):
+    return render(request, "film.html")
+
 
 # ── Blog – čtení je veřejné ───────────────────────────────────────
 def article_list(request):
