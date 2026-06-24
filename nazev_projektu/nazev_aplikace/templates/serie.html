@@ -5,7 +5,7 @@
 {% block extra_head %}
 <style>
   .serie-section {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 6rem 3rem;
     text-align: center;
@@ -107,13 +107,13 @@
     border: 1px solid rgba(15,14,12,.12);
 
     width: 100%;
-    max-width: 550px;
-    min-height: 180px;
+    max-width: 700px;
+    min-height: 200px;
 
     padding: 2rem;
 
     display: flex;
-    gap: 1.25rem;
+    gap: 1.5rem;
     align-items: flex-start;
   }
 
@@ -122,8 +122,8 @@
   }
 
   .video-thumb img {
-    width: 260px;
-    height: 146px;
+    width: 320px;
+    height: 180px;
     object-fit: cover;
     display: block;
     border: 1px solid rgba(15,14,12,.12);
@@ -181,25 +181,25 @@
 
   .timeline-item:not(.reverse) .timeline-card {
     justify-self: end;
-    margin-right: 4.5rem;
+    margin-right: 7.5rem;
   }
 
   .timeline-item:not(.reverse) .timeline-date {
     justify-self: start;
-    margin-left: 4.5rem;
+    margin-left: 7.5rem;
   }
 
   .timeline-item.reverse .timeline-card {
     grid-column: 2;
     justify-self: start;
-    margin-left: 4.5rem;
+    margin-left: 7.5rem;
   }
 
   .timeline-item.reverse .timeline-date {
     grid-column: 1;
     grid-row: 1;
     justify-self: end;
-    margin-right: 4.5rem;
+    margin-right: 7.5rem;
   }
 
   @media (max-width: 768px) {
@@ -229,7 +229,7 @@
     }
 
     .timeline-item.reverse .timeline-card {
-      margin-left: 4.5rem;
+      margin-left: 7.5rem;
       margin-right: 0;
       justify-self: stretch;
       max-width: none;
@@ -238,7 +238,7 @@
 
     .timeline-date,
     .timeline-item.reverse .timeline-date {
-      margin-left: 4.5rem;
+      margin-left: 7.5rem;
       margin-right: 0;
       margin-bottom: 1rem;
       justify-self: start;
