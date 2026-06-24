@@ -61,9 +61,6 @@
     position: relative;
     margin-top: 5rem;
     padding: 2rem 0;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .timeline::before {
@@ -82,6 +79,7 @@
   .timeline-item {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 3rem;
     align-items: center;
 
     margin-bottom: 4rem;
@@ -108,8 +106,7 @@
     background: var(--paper);
     border: 1px solid rgba(15,14,12,.12);
 
-    width: 100%;
-    max-width: 400px;
+    max-width: 380px;
     min-height: 180px;
 
     padding: 1.5rem;
@@ -179,30 +176,25 @@
     font-weight: 500;
     color: var(--muted);
     letter-spacing: .08em;
-    text-align: center;
   }
 
   .timeline-item:not(.reverse) .timeline-card {
     justify-self: end;
-    margin-right: 0;
   }
 
   .timeline-item:not(.reverse) .timeline-date {
     justify-self: start;
-    margin-left: 0;
   }
 
   .timeline-item.reverse .timeline-card {
     grid-column: 2;
     justify-self: start;
-    margin-left: 0;
   }
 
   .timeline-item.reverse .timeline-date {
     grid-column: 1;
     grid-row: 1;
     justify-self: end;
-    margin-right: 0;
   }
 
   @media (max-width: 768px) {
@@ -214,6 +206,7 @@
     .timeline-item,
     .timeline-item.reverse {
       grid-template-columns: 1fr;
+      gap: 0;
     }
 
     .timeline-item::after {
@@ -221,12 +214,9 @@
     }
 
     .timeline-card {
-      width: auto;
       max-width: none;
       flex-direction: column;
-      justify-self: stretch;
-      margin-left: 3rem !important;
-      margin-right: 0 !important;
+      margin-left: 3rem;
     }
 
     .video-thumb img {
@@ -234,10 +224,15 @@
       height: auto;
     }
 
+    .timeline-item.reverse .timeline-card {
+      margin-left: 3rem;
+      margin-right: 0;
+      grid-column: auto;
+    }
+
     .timeline-date,
     .timeline-item.reverse .timeline-date {
       margin-left: 3rem;
-      margin-right: 0;
       margin-bottom: 1rem;
       justify-self: start;
       grid-column: auto;
@@ -288,10 +283,6 @@
       </div>
     </div>
 
-
-
-
-
     <div class="timeline-item reverse">
       <div class="timeline-card">
 
@@ -320,8 +311,6 @@
       </div>
     </div>
 
-
-    
     <div class="timeline-item">
       <div class="timeline-card">
 
@@ -343,15 +332,12 @@
           </p>
         </div>
 
-        
       </div>
 
       <div class="timeline-date">
         DD.MM.YYYY
       </div>
     </div>
-
-
 
 </section>
 {% endblock %}
