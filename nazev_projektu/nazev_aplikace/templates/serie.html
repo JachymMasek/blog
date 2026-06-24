@@ -61,6 +61,9 @@
     position: relative;
     margin-top: 5rem;
     padding: 2rem 0;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .timeline::before {
@@ -105,7 +108,8 @@
     background: var(--paper);
     border: 1px solid rgba(15,14,12,.12);
 
-    width: 500px;
+    width: 100%;
+    max-width: 400px;
     min-height: 180px;
 
     padding: 1.5rem;
@@ -175,29 +179,30 @@
     font-weight: 500;
     color: var(--muted);
     letter-spacing: .08em;
+    text-align: center;
   }
 
   .timeline-item:not(.reverse) .timeline-card {
     justify-self: end;
-    margin-right: 3rem;
+    margin-right: 0;
   }
 
   .timeline-item:not(.reverse) .timeline-date {
     justify-self: start;
-    margin-left: 3rem;
+    margin-left: 0;
   }
 
   .timeline-item.reverse .timeline-card {
     grid-column: 2;
     justify-self: start;
-    margin-left: 3rem;
+    margin-left: 0;
   }
 
   .timeline-item.reverse .timeline-date {
     grid-column: 1;
     grid-row: 1;
     justify-self: end;
-    margin-right: 3rem;
+    margin-right: 0;
   }
 
   @media (max-width: 768px) {
@@ -217,20 +222,16 @@
 
     .timeline-card {
       width: auto;
+      max-width: none;
       flex-direction: column;
+      justify-self: stretch;
+      margin-left: 3rem !important;
+      margin-right: 0 !important;
     }
 
     .video-thumb img {
       width: 100%;
       height: auto;
-    }
-
-    .timeline-item.reverse .timeline-card {
-      margin-left: 3rem;
-      margin-right: 0;
-      justify-self: stretch;
-      max-width: none;
-      grid-column: auto;
     }
 
     .timeline-date,
