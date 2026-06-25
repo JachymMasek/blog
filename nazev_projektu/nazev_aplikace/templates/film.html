@@ -77,13 +77,19 @@
     text-align: center;
   }
 
+  .trailer-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin: 0 0 1rem 0;
+    font-style: italic;
+    color: var(--accent);
+  }
+
   .trailer-thumb {
     display: block;
     width: 100%;
-    margin-bottom: 1rem;
     text-decoration: none;
-    border-radius: 8px;
-    overflow: hidden;
     transition: transform 0.3s ease;
   }
 
@@ -95,15 +101,7 @@
     width: 100%;
     height: auto;
     display: block;
-  }
-
-  .trailer-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.3rem;
-    color: var(--ink);
-    margin: 0;
-    font-style: italic;
-    color: var(--accent);
+    border: none;
   }
 
   .film-description {
@@ -138,24 +136,24 @@
 <section class="trailers-container">
   <div class="trailers-grid">
     <div class="trailer-card">
+      <h3 class="trailer-title">Název</h3>
       <a class="trailer-thumb" href="https://www.youtube.com/watch?v=tKGhxMi50y8" target="_blank">
         <img src="https://img.youtube.com/vi/tKGhxMi50y8/hqdefault.jpg" alt="Trailer 1">
       </a>
-      <h3 class="trailer-title">Název</h3>
     </div>
 
     <div class="trailer-card">
+      <h3 class="trailer-title">Název</h3>
       <a class="trailer-thumb" href="https://www.youtube.com/watch?v=0HjdiohVOik" target="_blank">
         <img src="https://img.youtube.com/vi/0HjdiohVOik/hqdefault.jpg" alt="Trailer 2">
       </a>
-      <h3 class="trailer-title">Název</h3>
     </div>
 
     <div class="trailer-card">
+      <h3 class="trailer-title">Název</h3>
       <a class="trailer-thumb" href="https://www.youtube.com/watch?v=2z6a6NUFlsU" target="_blank">
         <img src="https://img.youtube.com/vi/2z6a6NUFlsU/hqdefault.jpg" alt="Trailer 3">
       </a>
-      <h3 class="trailer-title">Název</h3>
     </div>
   </div>
 
